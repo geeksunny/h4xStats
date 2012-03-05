@@ -1,0 +1,18 @@
+This project features the following software assets.
+-----
+
+Libraries
+---
+jQuery: MIT/GPL License
+SimpleModal: MIT License
+Fancybox: Creative Commons License
+amCharts: Linkware License
+
+GeoIP Data (http://www.maxmind.com/app/geolitecountry)
+---
+GeoLite Country: Maxmind's Open Data License
+
+Icons (www.famfamfam.com - mjames@gmail.com)
+---
+Silk Icons: Creative Commons Attribution 2.5 License
+Flag Icons: Public Domain
