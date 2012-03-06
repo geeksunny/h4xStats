@@ -13,15 +13,11 @@ $link = $dbh->sqlQuery("SELECT `userid`,`url`,`string`,`date_added`,`enabled` FR
 if (!$link)
 	die("Link could not be found.");
 
-// amCharts class
+// amCharts class object initializations.
 require_once("classes/class.amcharts.php");
 $charts = new amCharts();
 $charts->addChart($pie_country,"pie","Country","Clicks","country");
 $charts->addChart($pie_referer,"pie","Referer","Clicks","referer");
-// DEBUG CODE
-/*$pie->add(array("United States"=> 15));
-$pie->add(array("United Sandals"=> 15));
-$pie->add(array("United Kingdom"=> 15));*/
 
 // Grab all data for stats report!
 $data = $dbh->sqlQuery("SELECT `ip`,`referer`,`datetime`,`country` FROM `".$dbh->prefix."log` WHERE `link_id`='".$id."';");
@@ -56,9 +52,6 @@ foreach ($stats_referers as $referer=>$value)
 {
 	$pie_referer->add(array($referer=>$value));
 }
-// TODO: Add Referer pie chart!
-
-//var_dump($pie->data);
 ?>
 <!doctype html>
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
@@ -79,45 +72,7 @@ foreach ($stats_referers as $referer=>$value)
 	<script src="js/libs/jquery-1.7.1.min.js"></script>
 	<script src="js/functions.js"></script>
     <?=$charts->get_js_includes()?>
-	<?//TODO: Need to figure out a way to handle multiple charts... they have to be in the same `window.onload` function...
-		// One solution: http://www.webreference.com/programming/javascript/onloads/index.html
-		// Another solution: build the functionality into the charts class... have one overall class that calls the other classes into it and outputs all into a single window.onload at the end.
-	?>
 	<?=$charts->get_js_chart()?>
-	<!--<script type="text/javascript">
-		var chart;
-		var legend;
-
-		var chartData = [
-		{country:"Czech Republic",visits:156},
-		{country:"Ireland",visits:131},
-		{country:"Germany",visits:115},
-		{country:"Australia",visits:109},
-		{country:"Austria",visits:108},
-		{country:"UK",visits:99},
-		{country:"Belgium",visits:93}];
-
-		window.onload = function()
-		{
-			chart = new AmCharts.AmPieChart();
-			chart.dataProvider = chartData;
-			chart.titleField = "country";
-			chart.valueField = "visits";
-
-			chart.startDuration = 0;
-
-			chart.labelRadius = -25;
-			chart.labelText = "[[percents]]%";
-
-
-			legend = new AmCharts.AmLegend();
-			legend.align = "center";
-			legend.markerType = "circle";
-			chart.addLegend(legend);
-
-			chart.write("chartdiv");
-		}
-	</script>-->
 </head>
 
 <body>
