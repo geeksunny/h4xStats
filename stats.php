@@ -15,8 +15,9 @@ if (!$link)
 
 // amCharts class
 require_once("classes/class.amcharts.php");
-$pie_country = new PieChart("Country","Clicks","country");
-$pie_referer = new PieChart("Referer","Clicks","referer");
+$charts = new amCharts();
+$charts->addChart($pie_country,"pie","Country","Clicks","country");
+$charts->addChart($pie_referer,"pie","Referer","Clicks","referer");
 // DEBUG CODE
 /*$pie->add(array("United States"=> 15));
 $pie->add(array("United Sandals"=> 15));
@@ -77,13 +78,12 @@ foreach ($stats_referers as $referer=>$value)
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/libs/jquery-1.7.1.min.js"></script>
 	<script src="js/functions.js"></script>
-    <?=$pie_country->get_js_includes()?>
+    <?=$charts->get_js_includes()?>
 	<?//TODO: Need to figure out a way to handle multiple charts... they have to be in the same `window.onload` function...
 		// One solution: http://www.webreference.com/programming/javascript/onloads/index.html
 		// Another solution: build the functionality into the charts class... have one overall class that calls the other classes into it and outputs all into a single window.onload at the end.
 	?>
-	<?=$pie_country->get_js_chart()?>
-	<?=$pie_referer->get_js_chart()?>
+	<?=$charts->get_js_chart()?>
 	<!--<script type="text/javascript">
 		var chart;
 		var legend;

@@ -1,5 +1,5 @@
 <?php
-// TODO: Modify to allow for multiple charts on a single page.  A single instance of the class must be made, an array of charts and their data must be created, and
+// PieChart class is used for creating pie charts in the main amCharts class object.
 class PieChart{
 	public $name = "chartdiv";	// id to use on chart's div
 	public $title = "Item";
@@ -23,75 +23,62 @@ class PieChart{
 		if ($name)
 			$this->name = $name;
 	}
-	public function get_js_includes()
-	{
-		$url = $this->get_server_path(1,false,true,true);
-		echo '<script src="'.$url.'js/amcharts.js" type="text/javascript"></script>
-		<script src="'.$url.'js/raphael.js" type="text/javascript"></script>
-		';
-	}
+	// Adds data to the chart object. Must be an array.
 	public function add($data)
 	{
 		if (is_array($data))
 			array_push($this->data, $data);
 	}
-	public function get_js_chart($legend = true)
+	// Returns the javascript variable declarations to create the chart. To be used by the main amCharts() class object.
+	public function get_js_vars()
 	{
-		echo '
-	<script type="text/javascript">
-		var chart;
-		var legend;
-		';
-		$this->get_data_js();
-		echo '
-		window.onload = function() {
-			chart = new AmCharts.AmPieChart();
-			chart.dataProvider = chartData;
-			chart.titleField = "'.$this->title.'";
-			chart.valueField = "'.$this->value.'";
+		return "var ".$this->name."_chart; var ".$this->name."_legend; ";
+	}
+	// Returns the javascript initialization code to create the chart. To be used by the main amCharts() class object.
+	public function get_js_init($legend = true)
+	{
+		$chart_var = $this->name."_chart";
+		$legend_var = $this->name."_legend";
+		$init = '
+			'.$chart_var.' = new AmCharts.AmPieChart();
+			'.$chart_var.'.dataProvider = '.$this->name.'_data;
+			'.$chart_var.'.titleField = "'.$this->title.'";
+			'.$chart_var.'.valueField = "'.$this->value.'";
 
 			// - Enable Later?
-			//chart.marginTop = 35;
-			//chart.marginLeft = 100;
-			//chart.color = "#7a7a7a";
-			//chart.backgroundColor = "#FFFFFF";
-			//chart.backgroundAlpha = 1;
+			//'.$chart_var.'.marginTop = 35;
+			//'.$chart_var.'.marginLeft = 100;
+			//'.$chart_var.'.color = "#7a7a7a";
+			//'.$chart_var.'.backgroundColor = "#FFFFFF";
+			//'.$chart_var.'.backgroundAlpha = 1;
 
 			// Make these modular in the future?
-			chart.startDuration = 0;	// No loading animations
-			chart.labelRadius = -25;	// lables inside the pie chunks
-			chart.labelText = "[[percents]]%";	// template for the labels
+			'.$chart_var.'.startDuration = 0;	// No loading animations
+			'.$chart_var.'.labelRadius = -25;	// lables inside the pie chunks
+			'.$chart_var.'.labelText = "[[percents]]%";	// template for the labels
 			';
 		// Only create legend if $legend == true (defaults to true)
 		if ($legend)
-			echo '
+			$init .= '
 
 			// Make this modular in the future?
-			legend = new AmCharts.AmLegend();
-			legend.align = "center";
-			legend.markerType = "circle";
-			chart.addLegend(legend);
+			'.$legend_var.' = new AmCharts.AmLegend();
+			'.$legend_var.'.align = "center";
+			'.$legend_var.'.markerType = "circle";
+			'.$chart_var.'.addLegend('.$legend_var.');
 			';
-		echo '
+		$init .= '
 
-			chart.write("'.$this->name.'");
-		}
-
-		</script>
+			'.$chart_var.'.write("'.$this->name.'");
 		';
-	}
-	public function get_data_js()
-	{
-		/*echo '
-		var chartData = [{hour:5,rev_cost:40},
-				{hour:6,rev_cost:26.2},
-				{hour:7,rev_cost:30.1},
-				{hour:8,rev_cost:29.5},
-				{hour:9,rev_cost:24.6}];
-				';*/
 
+		return $init;
+	}
+	// Returns the data used to create the chart. To be used by the main amCharts() class object.
+	public function get_js_data()
+	{
 		$data_string = "
-		var chartData = [";
+		var ".$this->name."_data = [";
 		foreach ($this->data as $row)
 		{
 			foreach ($row as $title_data=>$value_data)
@@ -103,13 +90,15 @@ class PieChart{
 
 		$data_string .= "];
 		";
-		echo $data_string;
+		return $data_string;
 	}
+	// Returns the <div> tag that will hold the chart on-screen. Call within the <body> of your page.
 	public function get_chart_div()
 	{
 		echo '<div id="'.$this->name.'" style="width:'.$this->width.''.$this->width_units.'; height:'.$this->height.''.$this->height_units.';"></div>';
 	}
-	public function get_color()
+	// Returns a color for the chart data to use.
+	private function get_color()
 	{
 		$rand = rand(0, count($this->colors)-1);
 		$count=0;
@@ -124,6 +113,59 @@ class PieChart{
 		}
 
 		return $mycolor;
+	}
+}
+// amCharts class is a wrapper/handler for managing more than one amChart on a single page.
+class amCharts {
+	public $charts = array();
+
+	function __construct()
+	{
+		// TODO: Do we need anything here? If not, remove!
+	}
+	// Creates a new chart object. `$handle` must be provided to store a reference to the specific object this creates, and can then be used in the page's code to add data to it.
+	public function addChart(&$handle, $type="pie", $title=false, $value=false, $name=false)	//$type defaults to "pie" because that is currently the only type available.
+	{
+		if (!$name)
+			$name = "chartdiv".(count($this->charts)+1);
+
+		switch($type)
+		{
+			case "pie":
+				$handle = $this->charts[] = new PieChart($title, $value, $name);
+				break;
+			default:
+				$handle = false;
+				break;
+		}
+	}
+	// Outputs the required include statements for the charts. Use in the <head> of your document.
+	public function get_js_includes()
+	{
+		$url = $this->get_server_path(1,false,true,true);
+		echo '<script src="'.$url.'js/amcharts.js" type="text/javascript"></script>
+		<script src="'.$url.'js/raphael.js" type="text/javascript"></script>
+		';
+	}
+	// Outputs the required javascript code for creating all of the charts on the page. Use in the <head> of your document.
+	public function get_js_chart()
+	{
+		$vars = $data = $init = '';	// Initialize the variables.
+		foreach ($this->charts as $chart)
+		{
+			$vars .= $chart->get_js_vars();
+			$data .= $chart->get_js_data();
+			$init .= $chart->get_js_init();
+		}
+		echo '
+		<script type="text/javascript">
+		'.$vars.'
+		'.$data.'
+		window.onload = function() {
+			'.$init.'
+		}
+		</script>
+		';
 	}
 
 	// Returns the current server directory. // TODO: MIGHT BE MOVED TO ANOTHER CLASS IN THE FUTURE.
