@@ -19,6 +19,10 @@ $charts = new amCharts();
 $charts->addChart($pie_country,"pie","Country","Clicks","country");
 $charts->addChart($pie_referer,"pie","Referer","Clicks","referer");
 
+// Randomize the colors for both charts!
+//$pie_country->colors(true);
+//$pie_referer->colors(true);
+
 // Grab all data for stats report!
 $data = $dbh->sqlQuery("SELECT `ip`,`referer`,`datetime`,`country` FROM `".$dbh->prefix."log` WHERE `link_id`='".$id."';");
 

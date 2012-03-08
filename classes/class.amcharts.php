@@ -12,7 +12,7 @@ class PieChart{
 	public $height_units='px';
 	public $left_margin;
 	public $right_margin;
-	public $colors = array('595A31', '8CA400', 'F29513', 'FFC080', '643E3B', 'C09376', 'FAB252', 'EEC5C3', 'FFFF7D', '3A3F4B', '911FF7', '584A28', 'D23000', '050C1B','450900');
+	private $colors = array('595A31', '8CA400', 'F29513', 'FFC080', '643E3B', 'C09376', 'FAB252', 'EEC5C3', 'FFFF7D', '3A3F4B', '911FF7', 'D23000', '450900');
 
 	// TODO: Make all variables modifiable with a function / multiple functions
 	function __construct($title = false, $value = false, $name = false){
@@ -22,6 +22,16 @@ class PieChart{
 			$this->value = $value;
 		if ($name)
 			$this->name = $name;
+	}
+	// Modify the objects color options.
+	public function colors($randomize = false, $color_list=false)
+	{
+		// if an array is passed for $color_list, set that as the new color list and replace the default list.
+		if (is_array($color_list))
+			$this->colors = $color_list;
+		// When $randomize is set to true, it will randomize the color list before the chart object is created on-screen.
+		if ($randomize === true)
+			shuffle($this->colors);
 	}
 	// Adds data to the chart object. Must be an array.
 	public function add($data)
@@ -44,6 +54,7 @@ class PieChart{
 			'.$chart_var.'.dataProvider = '.$this->name.'_data;
 			'.$chart_var.'.titleField = "'.$this->title.'";
 			'.$chart_var.'.valueField = "'.$this->value.'";
+			'.$chart_var.'.colors = '.$this->get_colors().';
 
 			// - Enable Later?
 			//'.$chart_var.'.marginTop = 35;
@@ -98,21 +109,20 @@ class PieChart{
 		echo '<div id="'.$this->name.'" style="width:'.$this->width.''.$this->width_units.'; height:'.$this->height.''.$this->height_units.';"></div>';
 	}
 	// Returns a color for the chart data to use.
-	private function get_color()
+	private function get_colors()
 	{
-		$rand = rand(0, count($this->colors)-1);
-		$count=0;
-		foreach($this->colors as $id=>$color)
+		$colors = "";	// Color string
+		$i = 0;			// iterator variable
+		foreach ($this->colors as $color)
 		{
-			if($count==$rand)
-			{
-				$mycolor = $color;
-				unset($this->colors[$id]);
-			}
-			$count+=1;
+			// Break the loop if the iterator has met the variable count.
+			if ($i == count($this->data))
+				break;
+			$colors .= '"#'.$color.'",';
+			$i++;
 		}
-
-		return $mycolor;
+		$colors = rtrim($colors,",");
+		return "[".$colors."]";
 	}
 }
 // amCharts class is a wrapper/handler for managing more than one amChart on a single page.
