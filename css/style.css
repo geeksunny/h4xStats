@@ -126,6 +126,9 @@ header {
 	background-color: #a63f3f;
 	-webkit-border-radius: 5px 5px;
 }
+.link, .stats, .toggle, .delete {
+	cursor: pointer;
+}
 
 #stats {
 	padding: 15px 35px;
