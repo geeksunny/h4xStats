@@ -157,6 +157,18 @@ header {
 #links_table {
 	margin-top: 10px;
 }
+#links_table td {
+	padding: 10px;
+}
+#links_table thead tr {
+	background-color: #82b043;
+}
+#links_table tbody tr {
+	background-color: #90c44b;
+}
+#links_table tbody tr.zebra {
+	background-color: #99d150;
+}
 thead td {
 	font-weight: bold;
 }
@@ -172,6 +184,20 @@ footer {
 
 .wide {
 	width: 100%;
+}
+
+/* Rounded Corner classes */
+.round_topleft {
+	-webkit-border-top-left-radius: 25px;
+}
+.round_topright {
+	-webkit-border-top-right-radius: 25px;
+}
+.round_bottomleft {
+	-webkit-border-bottom-left-radius: 25px;
+}
+.round_bottomright {
+	-webkit-border-bottom-right-radius: 25px;
 }
 
 

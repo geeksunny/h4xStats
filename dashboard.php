@@ -61,20 +61,33 @@ $links = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."links` WHERE `userid`='"
 					<table width="100%" id="links_table" <?php if (!$links) echo 'style="display: none;"'; ?>>
 						<thead>
 							<tr>
-								<td style="width:5%;">#</td>
+								<td class="round_topleft" style="width:5%;">#</td>
 								<td style="width:9%;">String</td>
 								<td style="width:80%;">URL</td>
-								<td style="width:6%; min-width: 65px; text-align: center;">Actions</td>
+								<td class="round_topright" style="width:6%; min-width: 65px; text-align: center;">Actions</td>
 							</tr>
 						</thead>
 						<tbody id="links_listing">
 						<?php
 						if ($links)
 						{
+							$zebra = false;				// Initializing the zebra stripe flag.
+							$count = count($links);		// Used for bottom-row rounded borders.
+							$i = 1;						// loop iterator.
 							foreach ($links as $link)
 							{
+								$row_class = ($zebra) ? ' class="zebra"' : "";		// Sets class to use for the table row.
+								// Sets classes to use on outside cells on the last row, so the corners are rounded.
+								if ($i == $count)
+								{
+									$left_class = ' class="round_bottomleft"';
+									$right_class = ' class="round_bottomright"';
+								}
 								$enabled = ($link['enabled'] == "1") ? "pause" : "play";
-								echo '<tr><td>'.$link['id'].'</td><td>'.$link['string'].'</td><td>'.$link['url'].'</td><td id="'.$link['id'].'"><img src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/'.$enabled.'.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
+								// TODO: Make row go gray or faded when the link is paused.
+								echo '<tr'.$row_class.'><td'.$left_class.'>'.$link['id'].'</td><td>'.$link['string'].'</td><td>'.$link['url'].'</td><td'.$right_class.' id="'.$link['id'].'"><img src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/'.$enabled.'.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
+								$zebra = !$zebra;	// Reversing the zebra stripe flag.
+								$i++;
 							}
 						}
 						?>
