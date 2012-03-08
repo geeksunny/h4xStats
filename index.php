@@ -1,8 +1,5 @@
 <?php
-//TODO: Implement username/password system.
-//TODO: Set `userid` calls to user's id number when implemented
-// Initialize the MySQL database handle
-
+// Initialize the authentication handle
 require_once("classes/class.login.php");
 $auth = new auth(false,true,"dashboard.php",true);
 ?>

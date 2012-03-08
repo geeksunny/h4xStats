@@ -1,6 +1,5 @@
 <?php
 // Error out if no link code is supplied, or if link code is not an integer.
-// TODO: transition over to a varchar based link code in the future.
 // TODO: Fix up the error messaging.
 if (!isset($_GET['url']) || $_GET['url'] == "")
 {
