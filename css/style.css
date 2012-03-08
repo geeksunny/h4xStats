@@ -91,7 +91,7 @@ header {
 	background-color: #7ba63f;
 	width: 75%;
 	/*height: 300px;*/
-	-webkit-border-radius: 25px 25px;
+	-webkit-border-radius: 25px;
 	margin: 0px auto 0px auto;
 }
 #main .title {
@@ -117,14 +117,14 @@ header {
 	font-size: 25px;
 	padding: 5px;
 	border: solid 1px #000;
-	-webkit-border-radius: 5px 5px;
+	-webkit-border-radius: 5px;
 }
 #main form .bigsubmit {
 	font-family: "Midlet", sans-serif;
 	font-size: 25px;
 	padding: 5px;
 	background-color: #a63f3f;
-	-webkit-border-radius: 5px 5px;
+	-webkit-border-radius: 5px;
 }
 .link, .stats, .toggle, .delete {
 	cursor: pointer;
@@ -150,7 +150,7 @@ header {
 	display: inline;
 	color: #000;
 	background-color: #f00;
-	-webkit-border-radius: 5px 5px;
+	-webkit-border-radius: 5px;
 	padding: 2px 5px;
 }
 
