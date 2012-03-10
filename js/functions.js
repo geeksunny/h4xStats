@@ -152,9 +152,15 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 					case "success":
 						// Change the icon based on the result.
 						if (response.state == "1")
+						{
 							newImg = "pause.png";
+							selector.parent().parent().removeClass("paused");
+						}
 						else
+						{
 							newImg = "play.png";
+							selector.parent().parent().addClass("paused");
+						}
 						selector.attr("src","img/" + newImg);
 					break;
 					case "error":

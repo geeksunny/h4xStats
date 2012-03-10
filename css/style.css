@@ -172,6 +172,10 @@ header {
 thead td {
 	font-weight: bold;
 }
+#links_table tr.paused {
+	font-style:italic;
+	text-decoration: line-through;
+}
 
 footer {
 	font-family: "Midlet", sans-serif;

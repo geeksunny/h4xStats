@@ -1,5 +1,3 @@
-Fix `classes/class.amcharts.php` to allow for multiple charts on the same page. (Initialize class, add charts, output charts and onload() code)
-
 Hook the link icon up to a popup with the shortened link highlighted and easy to copy. Also consider quick links for sharing on Twitter and Facebook.
 
 Finish the installation scripts.

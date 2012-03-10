@@ -83,6 +83,15 @@ $links = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."links` WHERE `userid`='"
 									$left_class = ' class="round_bottomleft"';
 									$right_class = ' class="round_bottomright"';
 								}
+								if ($link['enabled'] == "1")
+								{
+									$enabled = "pause";
+								}
+								else
+								{
+									$enabled = "play";
+									$row_class = ($row_class == "") ? ' class="paused"' : ' class="zebra paused"';
+								}
 								$enabled = ($link['enabled'] == "1") ? "pause" : "play";
 								// TODO: Make row go gray or faded when the link is paused.
 								echo '<tr'.$row_class.'><td'.$left_class.'>'.$link['id'].'</td><td>'.$link['string'].'</td><td>'.$link['url'].'</td><td'.$right_class.' id="'.$link['id'].'"><img src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/'.$enabled.'.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
