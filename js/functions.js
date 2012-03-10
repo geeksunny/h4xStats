@@ -245,8 +245,14 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
    	});
 
     $(".link").click(function(){
-   		alert("Coming soon!");
-   		return false;
+		$('#modal-link-value').attr('value','http://www.google.com');
+		$('#modal-link-content').modal({
+			overlayId: 'link-overlay',
+			overlayClose: true,
+			containerId: 'link-container'
+		});
+		$('#modal-link-value').select();	// Highlight the URL to be easily copied.
+		return false;
    	});
 
 	// Hides error message on click.

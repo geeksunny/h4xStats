@@ -32,6 +32,7 @@ $links = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."links` WHERE `userid`='"
 	<script src="js/libs/jquery.simplemodal.js"></script>
 	<link rel="stylesheet" href="css/confirm.css">
 	<script src="js/confirm.js"></script>
+	<link rel="stylesheet" href="css/basic.css">
 	<link rel="stylesheet" href="js/libs/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 	<script type="text/javascript" src="js/libs/fancybox/jquery.fancybox.pack.js"></script>
 	<!-- CSS / JavaScript Functions -->
@@ -109,13 +110,18 @@ $links = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."links` WHERE `userid`='"
 			h4x.stats written by <a href="http://www.h4xful.net/">Justin Swanson</a>.
 		</footer>
 
-		<!-- modal content -->
+		<!-- modal content (delete) -->
 		<div id='confirm'>
 			<div class='header'><span>Confirm</span></div>
 			<div class='message'></div>
 			<div class='buttons'>
 				<div class='no simplemodal-close'>No</div><div class='yes'>Yes</div>
 			</div>
+		</div>
+		<!-- modal content (link) -->
+		<div id='modal-link-content'>
+			<div class="title">Copy Link...</div><br />
+			<input type="text" value="" id="modal-link-value" />
 		</div>
 	</div> <!--! end of #container -->
 </body>

@@ -31,7 +31,8 @@ function confirm(message, callback) {
 		closeHTML: "<a title='Close' class='modal-close' style='cursor:pointer;'>x</a>",
 		position: ["20%",],
 		overlayId: 'confirm-overlay',
-		containerId: 'confirm-container', 
+		overlayClose: true,
+		containerId: 'confirm-container',
 		onShow: function (dialog) {
 			var modal = this;
 
