@@ -27,11 +27,21 @@ class PieChart
 	// Modify variables in the class
 	public function set_vars($data)
 	{
+		// Pass an associative array to this function to modify the variables in this object.
 		if (is_array($data))
 		{
 			foreach ($data as $key=>$value)
 				$this->$key = $value;
 		}
+	}
+	// Get the value of a variable in the class
+	public function get_var($var)
+	{
+		// Pass the name of the variable you want to retrieve the value of.
+		if (isset($this->$var))
+			return $this->$var;
+		else
+			return false;
 	}
 	// Modify the objects color options.
 	public function colors($randomize = false, $color_list=false)
