@@ -5,7 +5,7 @@ $auth = new auth(true,true,"index.php");
 $dbh = $auth->dbh;
 
 $id = $_GET['id'];
-$path = $auth->get_server_path(false);// Grab the current server path.
+$path = $auth->get_server_path(0,false,true,false);// Grab the current server path.
 
 // Check if the link exists.
 $link = $dbh->sqlQuery("SELECT `userid`,`url`,`string`,`date_added`,`enabled` FROM `".$dbh->prefix."links` WHERE `id`='".$id."' AND `userid`='".$auth->get_uid()."';",true,false);
@@ -17,7 +17,9 @@ if (!$link)
 require_once("classes/class.amcharts.php");
 $charts = new amCharts();
 $charts->addChart($pie_country,"pie","Country","Clicks","country");
+$pie_country->set_vars(array("width"=>500,"height"=>500));
 $charts->addChart($pie_referer,"pie","Referer","Clicks","referer");
+$pie_referer->set_vars(array("width"=>500,"height"=>500));
 
 // Randomize the colors for both charts!
 //$pie_country->colors(true);
@@ -98,11 +100,14 @@ foreach ($stats_referers as $referer=>$value)
 				</tbody>
 			</table>
 		</div>
-		<!--<div id="chartdiv" style="width: 640px; height: 400px;"></div>-->
-		Clicks by country!
-		<?=$pie_country->get_chart_div()?>
-		Click referers!
-		<?=$pie_referer->get_chart_div()?>
+		<div style="float:left;">
+			<h2 style="text-align: center;">Clicks by country!</h2>
+			<?=$pie_country->get_chart_div()?>
+		</div>
+		<div style="float:right;" class="clearfix">
+			<h2 style="text-align: center;">Click referers!</h2>
+			<?=$pie_referer->get_chart_div()?>
+		</div>
 	</div> <!--! end of #container -->
 </body>
 </html>
