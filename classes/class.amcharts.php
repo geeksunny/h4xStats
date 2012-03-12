@@ -7,6 +7,7 @@ class PieChart
 	private $value = "Value";
 
 	private $data=array();
+	private $legend = true;
 	private $width=600;
 	private $height=400;
 	private $width_units='px';
@@ -54,7 +55,7 @@ class PieChart
 		return "var ".$this->name."_chart; var ".$this->name."_legend; ";
 	}
 	// Returns the javascript initialization code to create the chart. To be used by the main amCharts() class object.
-	public function get_js_init($legend = true)
+	public function get_js_init()
 	{
 		$chart_var = $this->name."_chart";
 		$legend_var = $this->name."_legend";
@@ -78,7 +79,7 @@ class PieChart
 			'.$chart_var.'.labelText = "[[percents]]%";	// template for the labels
 			';
 		// Only create legend if $legend == true (defaults to true)
-		if ($legend)
+		if ($this->legend)
 			$init .= '
 
 			// Make this modular in the future?
