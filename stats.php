@@ -1,4 +1,5 @@
 <?php
+//TODO: Create and use a custom legend on the pie-charts, using more detailed data.
 // Initialize the Auth/MySQL database handle
 require_once("classes/class.login.php");
 $auth = new auth(true,true,"index.php");
@@ -17,13 +18,17 @@ if (!$link)
 require_once("classes/class.amcharts.php");
 $charts = new amCharts();
 $charts->addChart($pie_country,"pie","Country","Clicks","country");
-$pie_country->set_vars(array("width"=>500,"height"=>500));
+$pie_country->set_vars(array("width"=>500,"height"=>500));	//TODO: Disable the legend
 $charts->addChart($pie_referer,"pie","Referer","Clicks","referer");
-$pie_referer->set_vars(array("width"=>500,"height"=>500));
+$pie_referer->set_vars(array("width"=>500,"height"=>500));	//TODO: Disable the legend
 
 // Randomize the colors for both charts!
 //$pie_country->colors(true);
 //$pie_referer->colors(true);
+
+// Get the colors to be used in creating a custom chart legend
+$country_colors = $pie_country->get_var("colors");
+$referer_colors = $pie_referer->get_var("colors");
 
 // Grab all data for stats report!
 $data = $dbh->sqlQuery("SELECT `ip`,`referer`,`datetime`,`country` FROM `".$dbh->prefix."log` WHERE `link_id`='".$id."';");
@@ -34,11 +39,21 @@ $stats_referers = array();
 $total_clicks = 0;
 foreach ($data as $row)
 {
-	if ($row['referer'] == '')
-		$row['referer'] = "None";
-
+	// By Country
 	$stats_countries[$row['country']]++;
-	$stats_referers[$row['referer']]++;
+	// By Referer
+	if ($row['referer'] == '')
+	{
+		$row['referer'] = $domain = "None";
+	}
+	else
+	{
+		$url_details = parse_url($row['referer']);
+		$domain = $url_details['host'];
+	}
+	$stats_referers[$row['referer']]++;			// Detailed data
+	$stats_referers_simple[$domain]++;			// Simplified data
+
 	$total_clicks++;
 }
 // Get full names for countries...
@@ -54,7 +69,7 @@ foreach ($stats_countries as $code=>$value)
 {
 	$pie_country->add(array($country_names[$code]=>$value));
 }
-foreach ($stats_referers as $referer=>$value)
+foreach ($stats_referers_simple as $referer=>$value)
 {
 	$pie_referer->add(array($referer=>$value));
 }
