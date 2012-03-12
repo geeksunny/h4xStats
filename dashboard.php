@@ -1,6 +1,5 @@
 <?php
-//TODO: Implement username/password system.
-//TODO: Set `userid` calls to user's id number when implemented
+//TODO: Implement a "link name" and "link description" system
 // Initialize the MySQL database handle
 //require_once("classes/class.mysql.php");
 //$dbh = new dbh();
@@ -41,6 +40,7 @@ $links = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."links` WHERE `userid`='"
 </head>
 
 <body>
+	<div id="url_root" style="display:none;"><?=$auth->get_server_path(0,false,true,true)?></div>
 	<div id="container">
 		<header>
 			Logged in as <?=$auth->get_username()?> | <a href="log_out.php">Log Out</a>
@@ -56,14 +56,13 @@ $links = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."links` WHERE `userid`='"
 				<div style="overflow: hidden; padding-right: 30px;">
 					<input type="text" name="url" id="url_box" class="biginput wide" value="Enter a URL..." style="color:#ccc;" onfocus="inputClick(this, 'Enter a URL...');" onblur="inputBlur(this, 'Enter a URL...');" />
 				</div>
-				<div id="error_container">&nbsp;<label class="error" for="url" id="url_error"></label></div>
+				<div id="error_container">&nbsp;<label class="error" for="url_box" id="url_error"></label></div>
 				<div>
 					<!--&nbsp;-->
 					<table width="100%" id="links_table" <?php if (!$links) echo 'style="display: none;"'; ?>>
 						<thead>
 							<tr>
-								<td class="round_topleft" style="width:9%;">String</td>
-								<td style="width:80%;">Target URL</td>
+								<td class="round_topleft" style="width:80%;">Target URL</td>
 								<td class="round_topright" style="width:6%; min-width: 65px; text-align: center;">Actions</td>
 							</tr>
 						</thead>
@@ -94,7 +93,7 @@ $links = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."links` WHERE `userid`='"
 								}
 								$enabled = ($link['enabled'] == "1") ? "pause" : "play";
 								// TODO: Make row go gray or faded when the link is paused.
-								echo '<tr'.$row_class.'><td'.$left_class.'>'.$link['string'].'</td><td>'.$link['url'].'</td><td'.$right_class.' id="'.$link['id'].'"><img src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/'.$enabled.'.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
+								echo '<tr'.$row_class.'><td'.$left_class.'>'.$link['url'].'</td><td'.$right_class.' id="'.$link['id'].'"><img id="'.$link['string'].'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/'.$enabled.'.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
 								$zebra = !$zebra;	// Reversing the zebra stripe flag.
 								$i++;
 							}

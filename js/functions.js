@@ -245,7 +245,8 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
    	});
 
     $(".link").click(function(){
-		$('#modal-link-value').attr('value','http://www.google.com');
+		var new_url = $("#url_root").text()+ $(this).attr("id");
+		$('#modal-link-value').attr('value',new_url);
 		$('#modal-link-content').modal({
 			overlayId: 'link-overlay',
 			overlayClose: true,
