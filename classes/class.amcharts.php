@@ -1,20 +1,20 @@
 <?php
 // PieChart class is used for creating pie charts in the main amCharts class object.
-class PieChart{
-	public $name = "chartdiv";	// id to use on chart's div
-	public $title = "Item";
-	public $value = "Value";
+class PieChart
+{
+	private $name = "chartdiv";	// id to use on chart's <div>
+	private $title = "Item";
+	private $value = "Value";
 
-	public $data=array();
-	public $width=600;
-	public $height=400;
-	public $width_units='px';
-	public $height_units='px';
-	public $left_margin;
-	public $right_margin;
+	private $data=array();
+	private $width=600;
+	private $height=400;
+	private $width_units='px';
+	private $height_units='px';
+	private $left_margin;	// Currently un-used
+	private $right_margin;	// Currently un-used
 	private $colors = array('595A31', '8CA400', 'F29513', 'FFC080', '643E3B', 'C09376', 'FAB252', 'EEC5C3', 'FFFF7D', '3A3F4B', '911FF7', 'D23000', '450900');
 
-	// TODO: Make all variables modifiable with a function / multiple functions
 	function __construct($title = false, $value = false, $name = false){
 		if ($title)
 			$this->title = $title;
@@ -22,6 +22,15 @@ class PieChart{
 			$this->value = $value;
 		if ($name)
 			$this->name = $name;
+	}
+	// Modify variables in the class
+	public function set_vars($data)
+	{
+		if (is_array($data))
+		{
+			foreach ($data as $key=>$value)
+				$this->$key = $value;
+		}
 	}
 	// Modify the objects color options.
 	public function colors($randomize = false, $color_list=false)
@@ -126,7 +135,8 @@ class PieChart{
 	}
 }
 // amCharts class is a wrapper/handler for managing more than one amChart on a single page.
-class amCharts {
+class amCharts
+{
 	public $charts = array();
 
 	function __construct()
