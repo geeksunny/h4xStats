@@ -11,7 +11,7 @@ require_once("classes/class.mysql.php");
 $dbh = new dbh();
 include("config/config.php");
 
-$link = $dbh->getRow("SELECT * FROM `".$dbh->prefix."links` WHERE `string`='".$_GET['url']."' AND `enabled`='0';");
+$link = $dbh->getRow("SELECT * FROM `".$dbh->prefix."links` WHERE `string`='".$_GET['url']."' AND `enabled`='1';");
 
 //if ($dbh->checkError(true) == false)
 if ($link != 0)
