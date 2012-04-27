@@ -79,7 +79,7 @@ td { vertical-align: top; }
 }
 
 header {
-	height: 100px;
+	height: 50px;
 	font-family: "Midlet", sans-serif;
 	font-weight: lighter;
 	font-size: 13px;
@@ -130,6 +130,26 @@ header {
 	cursor: pointer;
 }
 
+#nav {
+	text-align: center;
+}
+#nav li {
+	display: inline;
+	color: #7ba63f;
+	font-size: 30px;
+	line-height: 30px;
+	/*text-transform: uppercase;*/
+	font-family: 'Midlet';
+	padding: 20px;
+}
+#nav li.selected, #nav li:hover {
+	color: #000;
+	background-color: #7ba63f;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	cursor: pointer;
+}
+
 #stats {
 	padding: 15px 35px;
 }
@@ -154,25 +174,25 @@ header {
 	padding: 2px 5px;
 }
 
-#links_table {
+.table {
 	margin-top: 10px;
 }
-#links_table td {
+.table td {
 	padding: 10px;
 }
-#links_table thead tr {
+.table thead tr {
 	background-color: #82b043;
 }
-#links_table tbody tr {
+.table tbody tr {
 	background-color: #90c44b;
 }
-#links_table tbody tr.zebra {
+.table tbody tr.zebra {
 	background-color: #99d150;
 }
 thead td {
 	font-weight: bold;
 }
-#links_table tr.paused {
+.table tr.paused {
 	font-style:italic;
 	text-decoration: line-through;
 }
@@ -192,16 +212,16 @@ footer {
 
 /* Rounded Corner classes */
 .round_topleft {
-	-webkit-border-top-left-radius: 25px;
+	-webkit-border-top-left-radius: 15px;
 }
 .round_topright {
-	-webkit-border-top-right-radius: 25px;
+	-webkit-border-top-right-radius: 15px;
 }
 .round_bottomleft {
-	-webkit-border-bottom-left-radius: 25px;
+	-webkit-border-bottom-left-radius: 15px;
 }
 .round_bottomright {
-	-webkit-border-bottom-right-radius: 25px;
+	-webkit-border-bottom-right-radius: 15px;
 }
 
 

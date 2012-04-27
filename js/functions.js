@@ -2,6 +2,10 @@
  * Javascript functions
  **/
 
+/////
+// TODO: Update functions for creating, deleting, toggling, stats, and code-grabbing to work with the pixel tab!
+/////
+
 function inputClick(elem, val)
 {
 	if (elem.value == val)
@@ -255,6 +259,27 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		$('#modal-link-value').select();	// Highlight the URL to be easily copied.
 		return false;
    	});
+
+	// Page navigation code. Toggles the given section into view on click.
+	$('#nav li').click(function(e)
+	{
+		e.preventDefault();
+
+		var page = '#' + $(this).attr('class');
+		console.log(page);
+
+		if ($(page).css('display') == 'none')
+		{
+			$('li.selected').removeClass('selected');
+			$('.page:visible').slideUp(200,function() {
+				$(page).slideDown(200);
+			});
+			$('.subtitle:visible').slideUp(200,function() {
+				$(page+'_subtitle').slideDown(200);
+			});
+			$(this).addClass('selected');
+		}
+	});
 
 	// Hides error message on click.
 	$(".error").click(function() {
