@@ -26,7 +26,7 @@ function inputBlur(elem, val)
 /* jQuery ajax code */
 $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
  	$(".error").hide();	// Hides error message div's on document.ready
-	$(".button#add_url").click(function() {
+	$(".button#add_url").live('click', function() {
 		// validate and processs form here.
 
 		$(".error").hide();	// re-hides all error messages upon validation attempt, in case any were showing at the time of validation.
@@ -84,7 +84,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
 	});
 
-	$(".button#login").click(function() {
+	$(".button#login").live('click', function() {
 		// validate and processs form here.
 
 		$(".error").hide();	// re-hides all error messages upon validation attempt, in case any were showing at the time of validation.
@@ -129,7 +129,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
 	});
 
-	$(".toggle").click(function() {
+	$(".toggle").live('click', function() {
 		// validate and processs form here.
 
 		// TODO: make a new error message spot for toggle/delete buttons
@@ -182,7 +182,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
 	});
 
-	$(".delete").click(function() {
+	$(".delete").live('click', function() {
 		// validate and processs form here.
 
 		// Grab the element handler for deeper function use.
@@ -229,7 +229,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
 	});
 
-    $(".stats").click(function(){
+    $(".stats").live('click', function(){
 		var id = $(this).parent().attr("id");	// Grabs the ID of the link
 		$.fancybox({
 	            'width': '85%',
@@ -248,7 +248,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
    		return false;
    	});
 
-    $(".link").click(function(){
+    $(".link").live('click', function(){
 		var new_url = $("#url_root").text()+ $(this).attr("id");
 		$('#modal-link-value').attr('value',new_url);
 		$('#modal-link-content').modal({
@@ -261,7 +261,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
    	});
 
 	// Page navigation code. Toggles the given section into view on click.
-	$('#nav li').click(function(e)
+	$('#nav li').live('click', function(e)
 	{
 		e.preventDefault();
 
@@ -282,7 +282,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 	});
 
 	// Hides error message on click.
-	$(".error").click(function() {
+	$(".error").live('click', function() {
 		$(".error").hide();
 	});
 });
