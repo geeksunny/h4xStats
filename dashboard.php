@@ -119,7 +119,7 @@ $pixels = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."pixels` WHERE `userid`=
 				<form>
 					<input type="submit" value="Add" id="pixel_url" class="bigsubmit button" style="float:right;" />
 					<div style="overflow: hidden; padding-right: 30px;">
-						<input type="text" name="url" id="pixel_box" class="biginput wide" value="Name your Pixel..." style="color:#ccc;" onfocus="inputClick(this, 'Name your Pixel...');" onblur="inputBlur(this, 'Enter a URL...');" />
+						<input type="text" name="url" id="pixel_box" class="biginput wide" value="Name your Pixel..." style="color:#ccc;" onfocus="inputClick(this, 'Name your Pixel...');" onblur="inputBlur(this, 'Name your Pixel...');" />
 					</div>
 					<div id="pixel_error_container">&nbsp;<label class="error" for="url_box" id="pixel_error"></label></div>
 					<div>

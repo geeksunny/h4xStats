@@ -26,64 +26,8 @@ function inputBlur(elem, val)
 /* jQuery ajax code */
 $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
  	$(".error").hide();	// Hides error message div's on document.ready
-	$(".button#add_url").live('click', function() {
-		// validate and processs form here.
 
-		$(".error").hide();	// re-hides all error messages upon validation attempt, in case any were showing at the time of validation.
-		var url = $("input#url_box").val();
-		if (url == "" || url == "Enter a URL...") {	// if the URL field is blank, error out.
-			$("label#url_error").text("You must enter a URL.").fadeIn(800);
-			//$("label#url_error").show();
-			$("input#url_box").focus();
-			return false;
-		}
-		// elseif... check to make sure any data entered has "http://"?
-
-		var dataString = "method=add&url="+url;
-		//alert(dataString); return false; //debug
-		$.ajax({
-			type: "POST",
-			url: "ajax.url.php",
-			data: dataString,
-			success: function(data) {
-				response = $.parseJSON(data);
-				//alert(response.result+" - "+response.string);//debug
-
-				// If successful, will receive a table row to insert into the table below
-				switch(response.result)
-				{
-					case "success":
-						// Build the new table row.
-						row = '<tr><td>' + response.url + '</td><td id="'+response.id+'"><img id="'+response.string+'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/pause.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
-
-						// if the table listing is hidden, display it.
-						if ($("#links_table").is(":hidden"))
-							$("#links_table").show();
-
-						if ($("#links_listing").children().first().val() != null)		// if there is a child element in the list, insert the row before the first child.
-							$("#links_listing").children().first().before(row);
-						else							// If list is empty, append the row.
-							$("#links_listing").append(row);
-						// Hide the new row and fade it into view.
-						$("#links_listing").children().first().hide().fadeIn(800);
-						// Reset the input box
-						$("#url_box").val("").focus();
-					break;
-					case "error":
-						$("label#url_error").text("An error has occurred: \"" + response.message + "\".").fadeIn(800);
-					break;
-					default:
-						$("label#url_error").text("An error has occurred: \"Invalid response from server\".").fadeIn(800);
-					break;
-				}
-			},
-			error: function() {
-				alert("AJAX ERROR RESPONSE");
-			}
-		});
-		return false;
-	});
-
+	// -- Login button click
 	$(".button#login").live('click', function() {
 		// validate and processs form here.
 
@@ -129,6 +73,66 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
 	});
 
+	// -- Add URL button action
+	$(".button#add_url").live('click', function() {
+		// validate and processs form here.
+
+		$(".error").hide();	// re-hides all error messages upon validation attempt, in case any were showing at the time of validation.
+		var url = $("input#url_box").val();
+		if (url == "" || url == "Enter a URL...") {	// if the URL field is blank, error out.
+			$("label#url_error").text("You must enter a URL.").fadeIn(800);
+			//$("label#url_error").show();
+			$("input#url_box").focus();
+			return false;
+		}
+		// elseif... check to make sure any data entered has "http://"?
+
+		var dataString = "method=add&url="+url;
+		//alert(dataString); return false; //debug
+		$.ajax({
+			type: "POST",
+			url: "ajax.actions.php",
+			data: dataString,
+			success: function(data) {
+				response = $.parseJSON(data);
+				//alert(response.result+" - "+response.string);//debug
+
+				// If successful, will receive a table row to insert into the table below
+				switch(response.result)
+				{
+					case "success":
+						// Build the new table row.
+						row = '<tr><td>' + response.url + '</td><td id="'+response.id+'"><img id="'+response.string+'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/pause.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
+
+						// if the table listing is hidden, display it.
+						if ($("#links_table").is(":hidden"))
+							$("#links_table").show();
+
+						if ($("#links_listing").children().first().val() != null)		// if there is a child element in the list, insert the row before the first child.
+							$("#links_listing").children().first().before(row);
+						else							// If list is empty, append the row.
+							$("#links_listing").append(row);
+						// Hide the new row and fade it into view.
+						$("#links_listing").children().first().hide().fadeIn(800);
+						// Reset the input box
+						$("#url_box").val("").focus();
+					break;
+					case "error":
+						$("label#url_error").text("An error has occurred: \"" + response.message + "\".").fadeIn(800);
+					break;
+					default:
+						$("label#url_error").text("An error has occurred: \"Invalid response from server\".").fadeIn(800);
+					break;
+				}
+			},
+			error: function() {
+				alert("AJAX ERROR RESPONSE");
+			}
+		});
+		return false;
+	});
+
+	// -- Toggle button action code
 	$(".toggle").live('click', function() {
 		// validate and processs form here.
 
@@ -143,7 +147,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 
 		$.ajax({
 			type: "POST",
-			url: "ajax.toggle.php",
+			url: "ajax.actions.php",
 			data: dataString,
 			success: function(data) {
 				//alert(data); return false;	//debug
@@ -182,6 +186,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
 	});
 
+	// -- Delete button action code
 	$(".delete").live('click', function() {
 		// validate and processs form here.
 
@@ -198,7 +203,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 
 			$.ajax({
 				type: "POST",
-				url: "ajax.toggle.php",
+				url: "ajax.actions.php",
 				data: dataString,
 				success: function(data) {
 					//alert(data); return false;	//debug
@@ -229,6 +234,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
 	});
 
+	// -- Stats button action code
     $(".stats").live('click', function(){
 		var id = $(this).parent().attr("id");	// Grabs the ID of the link
 		$.fancybox({
@@ -248,6 +254,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
    		return false;
    	});
 
+	// -- Link button action code
     $(".link").live('click', function(){
 		var new_url = $("#url_root").text()+ $(this).attr("id");
 		$('#modal-link-value').attr('value',new_url);
@@ -260,7 +267,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		return false;
    	});
 
-	// Page navigation code. Toggles the given section into view on click.
+	// -- Page navigation code. Toggles the given section into view on click.
 	$('#nav li').live('click', function(e)
 	{
 		e.preventDefault();
@@ -281,7 +288,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		}
 	});
 
-	// Hides error message on click.
+	// -- Error message action code. Hides error message on click.
 	$(".error").live('click', function() {
 		$(".error").hide();
 	});

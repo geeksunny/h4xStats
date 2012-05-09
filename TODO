@@ -1,3 +1,7 @@
-Hook the link icon up to a popup with the shortened link highlighted and easy to copy. Also consider quick links for sharing on Twitter and Facebook.
+Adapt the methods in the ajax.actions.php file to work with pixels in addition to the URL actions it already performs.
+
+Add CSS3 -transform code to the action buttons to give them animations when you click on them.
+
+On the copy-link popups, Consider quick links for sharing on Twitter and Facebook.
 
 Finish the installation scripts.

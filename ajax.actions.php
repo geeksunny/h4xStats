@@ -24,6 +24,42 @@ $uid = $auth->get_uid();
 
 switch ($_POST['method'])
 {
+	case "add":
+		// Error out if url is not specified.
+		if (!isset($_POST['url']) || $_POST['url'] == "" || $_POST['url'] == "Enter a URL...")
+		{
+			$response["result"] = "error";
+			$response["message"] = "No URL was specified.";
+			exit(json_encode($response));
+		}
+
+		// Generate the short string. // TODO: Add dupe checking.
+		$string = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 5);
+
+		// Insert the row
+		$params = array();
+		$params['userid'] = $uid;
+		$params['url'] = $_POST['url'];
+		$params['string'] = $string;
+		$params['date_added'] = date("Y-m-d H:i:s");
+		$params['enabled'] = '1';
+		$insertId = $dbh->insertRow($dbh->prefix."links",$params);
+
+		// Check for errors
+		if ($dbh->checkError(true) == true)
+		{
+			$response["result"] = "error";
+			$response["message"] = "There was an error with the database.";
+		}
+		else
+		{
+			$response["result"] = "success";
+			$response["id"] = $insertId;
+			$response["string"] = $string;
+			$response["url"] = $_POST['url'];
+		}
+		exit(json_encode($response));
+	break;
 	case "toggle":
 		// Error out if link ID is not supplied.
 		if (!isset($_POST['id']) || $_POST['id'] == "")
@@ -58,7 +94,6 @@ switch ($_POST['method'])
 		}
 		else
 		{
-			//echo '<tr><td>'.$insertId.'</td><td>'.$string.'</td><td>'.$_POST['url'].'</td><td><img src="img/stats.png" />&nbsp;<img src="img/pause.png" />&nbsp;<img src="img/delete.png" /></td></tr>';
 			$response["result"] = "error";
 			$response["message"] = "The given link does not exist.";
 		}
