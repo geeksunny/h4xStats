@@ -103,7 +103,6 @@ $pixels = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."pixels` WHERE `userid`=
 										$row_class = ($row_class == "") ? ' class="paused"' : ' class="zebra paused"';
 									}
 									$enabled = ($link['enabled'] == "1") ? "pause" : "play";
-									// TODO: Make row go gray or faded when the link is paused.
 									echo '<tr'.$row_class.'><td'.$left_class.'>'.$link['url'].'</td><td'.$right_class.' id="'.$link['id'].'"><img id="'.$link['string'].'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/'.$enabled.'.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
 									$zebra = !$zebra;	// Reversing the zebra stripe flag.
 									$i++;
@@ -117,11 +116,11 @@ $pixels = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."pixels` WHERE `userid`=
 			</div>
 			<div id="pixels" class="page" style="display:none;">
 				<form>
-					<input type="submit" value="Add" id="pixel_url" class="bigsubmit button" style="float:right;" />
+					<input type="submit" value="Add" id="add_pixel" class="bigsubmit button" style="float:right;" />
 					<div style="overflow: hidden; padding-right: 30px;">
-						<input type="text" name="url" id="pixel_box" class="biginput wide" value="Name your Pixel..." style="color:#ccc;" onfocus="inputClick(this, 'Name your Pixel...');" onblur="inputBlur(this, 'Name your Pixel...');" />
+						<input type="text" name="pixel" id="pixel_box" class="biginput wide" value="Name your Pixel..." style="color:#ccc;" onfocus="inputClick(this, 'Name your Pixel...');" onblur="inputBlur(this, 'Name your Pixel...');" />
 					</div>
-					<div id="pixel_error_container">&nbsp;<label class="error" for="url_box" id="pixel_error"></label></div>
+					<div id="pixel_error_container">&nbsp;<label class="error" for="pixel_box" id="pixel_error"></label></div>
 					<div>
 						<!--&nbsp;-->
 						<table width="100%" id="pixels_table" class="table" <?php if (!$links) echo 'style="display: none;"'; ?>>
@@ -131,12 +130,12 @@ $pixels = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."pixels` WHERE `userid`=
 									<td class="round_topright" style="width:6%; min-width: 65px; text-align: center;">Actions</td>
 								</tr>
 							</thead>
-							<tbody id="links_listing">
+							<tbody id="pixels_listing">
 							<?php
 							if ($pixels)
 							{
 								$zebra = false;				// Initializing the zebra stripe flag.
-								$count = count($pixels);		// Used for bottom-row rounded borders.
+								$count = count($pixels);	// Used for bottom-row rounded borders.
 								$i = 1;						// loop iterator.
 								foreach ($pixels as $pixel)
 								{
@@ -157,7 +156,6 @@ $pixels = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."pixels` WHERE `userid`=
 										$row_class = ($row_class == "") ? ' class="paused"' : ' class="zebra paused"';
 									}
 									$enabled = ($pixel['enabled'] == "1") ? "pause" : "play";
-									// TODO: Make row go gray or faded when the link is paused.
 									echo '<tr'.$row_class.'><td'.$left_class.'>'.$pixel['pixel_name'].'</td><td'.$right_class.' id="'.$pixel['id'].'"><img id="'.$pixel['string'].'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/'.$enabled.'.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
 									$zebra = !$zebra;	// Reversing the zebra stripe flag.
 									$i++;
