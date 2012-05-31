@@ -87,6 +87,7 @@ $pixels = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."pixels` WHERE `userid`=
 								foreach ($links as $link)
 								{
 									$row_class = ($zebra) ? ' class="zebra"' : "";		// Sets class to use for the table row.
+									$left_class = $right_class = "";					// Initialize the left and right class varaibles.
 									// Sets classes to use on outside cells on the last row, so the corners are rounded.
 									if ($i == $count)
 									{
@@ -140,6 +141,7 @@ $pixels = $dbh->sqlQuery("SELECT * FROM `".$dbh->prefix."pixels` WHERE `userid`=
 								foreach ($pixels as $pixel)
 								{
 									$row_class = ($zebra) ? ' class="zebra"' : "";		// Sets class to use for the table row.
+									$left_class = $right_class = "";					// Initialize the left and right class varaibles.
 									// Sets classes to use on outside cells on the last row, so the corners are rounded.
 									if ($i == $count)
 									{

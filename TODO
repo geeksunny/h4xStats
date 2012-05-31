@@ -1,7 +1,12 @@
-Adapt the methods in the ajax.actions.php file to work with pixels in addition to the URL actions it already performs.
+// High Priority
+TODO: Update the javascript functions for link-grabbing, stats, toggle, and delete buttons to work with both links and pixels.
+TODO: Update the overlay for pixel codes; Add customized code templates.
 
-Add CSS3 -transform code to the action buttons to give them animations when you click on them.
+// Medium Priority
+TODO: Figure out how to properly zebra-stripe the new links/pixels when inserted into the tables.
+TODO: Investigate / implement a better CSS-based overlay solution
 
-On the copy-link popups, Consider quick links for sharing on Twitter and Facebook.
-
-Finish the installation scripts.
+// Low Priority
+TODO: On the copy-link popups, Consider quick links for sharing on Twitter and Facebook.
+TODO: Add CSS3 -transform code to the action buttons to give them animations when you click on them.
+TODO: Finish the installation scripts.

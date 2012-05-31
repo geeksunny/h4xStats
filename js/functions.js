@@ -3,7 +3,7 @@
  **/
 
 /////
-// TODO: Update functions for creating, deleting, toggling, stats, and code-grabbing to work with the pixel tab!
+// TODO: Update functions for deleting, toggling, stats, and code-grabbing to work with the pixel tab!
 /////
 
 function inputClick(elem, val)
@@ -87,7 +87,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		}
 		// elseif... check to make sure any data entered has "http://"?
 
-		var dataString = "method=add&url="+url;
+		var dataString = "type=link&method=add&url="+url;
 		//alert(dataString); return false; //debug
 		$.ajax({
 			type: "POST",
@@ -121,7 +121,66 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 						$("label#url_error").text("An error has occurred: \"" + response.message + "\".").fadeIn(800);
 					break;
 					default:
-						$("label#url_error").text("An error has occurred: \"Invalid response from server\".").fadeIn(800);
+						$("label#_error").text("An error has occurred: \"Invalid response from server\".").fadeIn(800);
+					break;
+				}
+			},
+			error: function() {
+				alert("AJAX ERROR RESPONSE");
+			}
+		});
+		return false;
+	});
+
+	// -- Add Pixel button action
+	$(".button#add_pixel").live('click', function() {
+		// validate and processs form here.
+
+		$(".error").hide();	// re-hides all error messages upon validation attempt, in case any were showing at the time of validation.
+		var pixel = $("input#pixel_box").val();
+		if (pixel == "" || pixel == "Name your Pixel...") {	// if the pixel field is blank, error out.
+			$("label#pixel_error").text("You must enter a pixel name.").fadeIn(800);
+			//$("label#pixel_error").show();
+			$("input#pixel_box").focus();
+			return false;
+		}
+		// elseif... check to make sure any data entered has "http://"?
+
+		var dataString = "type=pixel&method=add&pixel="+pixel;
+		//alert(dataString); return false; //debug
+		$.ajax({
+			type: "POST",
+			url: "ajax.actions.php",
+			data: dataString,
+			success: function(data) {
+				response = $.parseJSON(data);
+				//alert(response.result+" - "+response.string);//debug
+
+				// If successful, will receive a table row to insert into the table below
+				switch(response.result)
+				{
+					case "success":
+						// Build the new table row.
+						row = '<tr><td>' + response.pixel + '</td><td id="'+response.id+'"><img id="'+response.string+'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/pause.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
+
+						// if the table listing is hidden, display it.
+						if ($("#pixels_table").is(":hidden"))
+							$("#pixels_table").show();
+
+						if ($("#pixels_listing").children().first().val() != null)		// if there is a child element in the list, insert the row before the first child.
+							$("#pixels_listing").children().first().before(row);
+						else							// If list is empty, append the row.
+							$("#pixels_listing").append(row);
+						// Hide the new row and fade it into view.
+						$("#pixels_listing").children().first().hide().fadeIn(800);
+						// Reset the input box
+						$("#pixel_box").val("").focus();
+					break;
+					case "error":
+						$("label#pixel_error").text("An error has occurred: \"" + response.message + "\".").fadeIn(800);
+					break;
+					default:
+						$("label#pixel_error").text("An error has occurred: \"Invalid response from server\".").fadeIn(800);
 					break;
 				}
 			},
@@ -273,7 +332,6 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		e.preventDefault();
 
 		var page = '#' + $(this).attr('class');
-		console.log(page);
 
 		if ($(page).css('display') == 'none')
 		{
