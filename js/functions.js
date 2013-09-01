@@ -87,7 +87,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		}
 		// elseif... check to make sure any data entered has "http://"?
 
-		var dataString = "type=link&method=add&url="+url;
+		var dataString = "type=links&method=add&url="+url;
 		//alert(dataString); return false; //debug
 		$.ajax({
 			type: "POST",
@@ -147,7 +147,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		}
 		// elseif... check to make sure any data entered has "http://"?
 
-		var dataString = "type=pixel&method=add&pixel="+pixel;
+		var dataString = "type=pixels&method=add&pixel="+pixel;
 		//alert(dataString); return false; //debug
 		$.ajax({
 			type: "POST",
@@ -204,7 +204,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 		selector = $(this);
 
 		var id = selector.parent().attr("id");	// Grabs the ID of the link
-		var dataString = "method=toggle&id=" + id;
+		var dataString = "method=toggle&type=" + $('.page:visible').attr('id') + "&id=" + id;
 
 		$.ajax({
 			type: "POST",
@@ -260,7 +260,7 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 			$(".error").hide();	// re-hides all error messages upon validation attempt, in case any were showing at the time of validation.
 
 			var id = selector.parent().attr("id");	// Grabs the ID of the link
-			var dataString = "method=delete&id=" + id;
+			var dataString = "method=delete&type=" + $('.page:visible').attr('id') + "&id=" + id;
 
 			$.ajax({
 				type: "POST",

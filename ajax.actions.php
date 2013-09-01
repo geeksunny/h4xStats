@@ -24,7 +24,7 @@ $uid = $auth->get_uid();
 
 switch ($_POST['type'])
 {
-	case "link":
+	case "links":
 		switch ($_POST['method'])
 		{
 			case "add":
@@ -121,7 +121,7 @@ switch ($_POST['type'])
 			break;
 		}
 	break;
-	case "pixel":
+	case "pixels":
 		switch ($_POST['method'])
 		{
 			case "add":
