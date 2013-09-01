@@ -102,7 +102,8 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 				{
 					case "success":
 						// Build the new table row.
-						row = '<tr><td>' + response.url + '</td><td id="'+response.id+'"><img id="'+response.string+'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/pause.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
+						class_str = (!$('tbody tr:first').hasClass('zebra') && $('tbody tr').length > 0) ? ' class="zebra"' : '';
+						row = '<tr'+class_str+'><td>' + response.url + '</td><td id="'+response.id+'"><img id="'+response.string+'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/pause.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
 
 						// if the table listing is hidden, display it.
 						if ($("#links_table").is(":hidden"))
@@ -161,7 +162,8 @@ $(function() {	// -Acts the same as  if it were  waiting for "document.ready"
 				{
 					case "success":
 						// Build the new table row.
-						row = '<tr><td>' + response.pixel + '</td><td id="'+response.id+'"><img id="'+response.string+'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/pause.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
+						class_str = (!$('tbody tr:first').hasClass('zebra') && $('tbody tr').length > 0) ? ' class="zebra"' : '';
+						row = '<tr'+class_str+'><td>' + response.pixel + '</td><td id="'+response.id+'"><img id="'+response.string+'" src="img/link.png" class="link" /><img src="img/stats.png" class="stats" /><img src="img/pause.png" class="toggle" /><img src="img/delete.png" class="delete" /></td></tr>';
 
 						// if the table listing is hidden, display it.
 						if ($("#pixels_table").is(":hidden"))
